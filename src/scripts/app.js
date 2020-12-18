@@ -64,6 +64,15 @@ function showTitleBar(streetName) {
   titleBar.innerText = `Displaying results for: ${streetName}`
 }
 
+function formatDate(date) {
+  let formatedDate = new Date(date)
+  return formatedDate.toLocaleTimeString('en-CA', 
+    { hour: '2-digit', 
+      minute: '2-digit', 
+      hour12: true 
+    })
+}
+
 // UI Interaction Methods
 function createStreetElement(streetKey, streetName) {
   streetNameList.insertAdjacentHTML(
@@ -71,6 +80,7 @@ function createStreetElement(streetKey, streetName) {
     `<a href="#" data-street-key="${streetKey}">${streetName}</a>`
   )
 }
+
 function createStreetNotFoundElement() {
   streetNameList.insertAdjacentHTML(
     "beforeend", 
@@ -86,7 +96,7 @@ function createBusStopScheduleElement(stopName, crossStreet, direction, busNumbe
       <td>${crossStreet}</td>
       <td>${direction}</td>
       <td>${busNumber}</td>
-      <td>${nextBus}</td>
+      <td>${formatDate(nextBus)}</td>
     </tr>`
   )
 }
