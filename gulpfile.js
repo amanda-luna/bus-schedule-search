@@ -3,7 +3,6 @@ const concat = require('gulp-concat');
 const minifyjs = require('gulp-minify');
 const cssnano = require('gulp-clean-css');
 const sourcemaps = require('gulp-sourcemaps');
-const optimizeimg = require('gulp-imagemin');
 
 function htmlTask() {
   return src('src/*.html')
