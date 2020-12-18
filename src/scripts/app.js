@@ -54,8 +54,10 @@ function showBusScheduleForStreet(streetKey) {
             });
         });
       })
+      .catch(err => console.log('Request failed', err));
     });
-  });
+  })
+  .catch(err => console.log('Request failed', err));
 }
 
 function showTitleBar(streetName) {
