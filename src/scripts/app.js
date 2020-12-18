@@ -1,6 +1,7 @@
 const streetNameList = document.querySelector('.streets');
 const searchBar = document.querySelector('form');
 const nextBusList = document.getElementById("nextBusList")
+const titleBar = document.getElementById("street-name")
 
 // API Interaction Functions
 function getStreetName(streetSearch) {
@@ -57,6 +58,10 @@ function showBusScheduleForStreet(streetKey) {
   });
 }
 
+function showTitleBar(streetName) {
+  titleBar.innerText = `Displaying results for: ${streetName}`
+}
+
 // UI Interaction Methods
 function createStreetElement(streetKey, streetName) {
   streetNameList.insertAdjacentHTML(
@@ -91,13 +96,13 @@ searchBar.addEventListener('submit', (event) => {
   streetSearch = event.target.firstElementChild.value
 
   showStreetNames(streetSearch);
-  
 })
 
 
 streetNameList.addEventListener('click', (event) => {
   event.preventDefault()
   nextBusList.innerHTML = "";
+
+  showTitleBar(event.target.innerText)
   showBusScheduleForStreet(event.target.getAttribute("data-street-key"))
-  
 })
