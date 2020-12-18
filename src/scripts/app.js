@@ -3,23 +3,26 @@ const searchBar = document.querySelector('form');
 const nextBusList = document.getElementById("nextBusList")
 const titleBar = document.getElementById("street-name")
 
-// API Interaction Functions
+// ------------------------- API Interaction Functions ------------------------- //
 function getStreetName(streetSearch) {
-  return fetch(`https://api.winnipegtransit.com/v3/streets.json?name=${streetSearch}&usage=long&api-key=W1WB4GcxMZgFV2NvYrCX`
+  return fetch(
+    `https://api.winnipegtransit.com/v3/streets.json?name=${streetSearch}&usage=long&api-key=W1WB4GcxMZgFV2NvYrCX`
   ).then((response) => response.json());
 }
 
 function getAllBusStopsFromStreet(streetKey){
-  return fetch(`https://api.winnipegtransit.com/v3/stops.json?street=${streetKey}&api-key=W1WB4GcxMZgFV2NvYrCX`
+  return fetch(
+    `https://api.winnipegtransit.com/v3/stops.json?street=${streetKey}&api-key=W1WB4GcxMZgFV2NvYrCX`
   ).then((response) => response.json());
 }
 
 function getSchedulesFromStop(stopKey) {
-  return fetch(`https://api.winnipegtransit.com/v3/stops/${stopKey}/schedule.json?max-results-per-route=2&api-key=W1WB4GcxMZgFV2NvYrCX`)
-  .then((response) => response.json())
+  return fetch(
+    `https://api.winnipegtransit.com/v3/stops/${stopKey}/schedule.json?max-results-per-route=2&api-key=W1WB4GcxMZgFV2NvYrCX`
+  ).then((response) => response.json())
 }
 
-// Methods for UI flow 
+// ------------------------- Methods for UI flow ------------------------- //
 function showStreetNames(streetName) {
   getStreetName(streetName)
   .then((streets) => {
@@ -73,7 +76,7 @@ function formatDate(date) {
     })
 }
 
-// UI Interaction Methods
+// ------------------------- UI Interaction Methods ------------------------- //
 function createStreetElement(streetKey, streetName) {
   streetNameList.insertAdjacentHTML(
     "beforeend", 
@@ -101,7 +104,7 @@ function createBusStopScheduleElement(stopName, crossStreet, direction, busNumbe
   )
 }
 
-// Event Listeners
+// ------------------------- Event Listeners ------------------------- //
 searchBar.addEventListener('submit', (event) => {
   event.preventDefault()
   streetNameList.innerHTML = "";
@@ -109,7 +112,6 @@ searchBar.addEventListener('submit', (event) => {
 
   showStreetNames(streetSearch);
 })
-
 
 streetNameList.addEventListener('click', (event) => {
   event.preventDefault()
