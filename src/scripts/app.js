@@ -2,23 +2,24 @@ const streetNameList = document.querySelector('.streets');
 const searchBar = document.querySelector('form');
 const nextBusList = document.getElementById("nextBusList")
 const titleBar = document.getElementById("street-name")
+const apiKey = "W1WB4GcxMZgFV2NvYrCX"
 
 // ------------------------- API Interaction Functions ------------------------- //
 function getStreetName(streetSearch) {
   return fetch(
-    `https://api.winnipegtransit.com/v3/streets.json?name=${streetSearch}&usage=long&api-key=W1WB4GcxMZgFV2NvYrCX`
+    `https://api.winnipegtransit.com/v3/streets.json?name=${streetSearch}&usage=long&api-key=${apiKey}`
   ).then((response) => response.json());
 }
 
 function getAllBusStopsFromStreet(streetKey){
   return fetch(
-    `https://api.winnipegtransit.com/v3/stops.json?street=${streetKey}&api-key=W1WB4GcxMZgFV2NvYrCX`
+    `https://api.winnipegtransit.com/v3/stops.json?street=${streetKey}&api-key=${apiKey}`
   ).then((response) => response.json());
 }
 
 function getSchedulesFromStop(stopKey) {
   return fetch(
-    `https://api.winnipegtransit.com/v3/stops/${stopKey}/schedule.json?max-results-per-route=2&api-key=W1WB4GcxMZgFV2NvYrCX`
+    `https://api.winnipegtransit.com/v3/stops/${stopKey}/schedule.json?max-results-per-route=2&api-key=${apiKey}`
   ).then((response) => response.json())
 }
 
@@ -115,8 +116,11 @@ searchBar.addEventListener('submit', (event) => {
 
 streetNameList.addEventListener('click', (event) => {
   event.preventDefault()
-  nextBusList.innerHTML = "";
 
-  showTitleBar(event.target.innerText)
-  showBusScheduleForStreet(event.target.getAttribute("data-street-key"))
+  if(event.target.getAttribute("data-street-key")) {
+    nextBusList.innerHTML = "";
+
+    showTitleBar(event.target.innerText)
+    showBusScheduleForStreet(event.target.getAttribute("data-street-key"))
+  }
 })
