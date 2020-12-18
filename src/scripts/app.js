@@ -7,18 +7,19 @@ function getStreetName(streetSearch) {
   ).then((response) => response.json());
 }
 
-function getStopsFromStreet(streetName) {
-
+function getBusStopsURL(streetKey) {
+  return `https://api.winnipegtransit.com/v3/stops.json?street=${streetKey}&api-key=W1WB4GcxMZgFV2NvYrCX`
 }
+
 
 function ShowStreetNames(streetName) {
   getStreetName(streetName)
   .then((streets) => {
     if (streets.streets.length === 0) {
-      createStreetNotFoundElement()
+      createStreetNotFoundElement();
     }
     streets.streets.forEach((street) => {
-      createStreetElement(street.key, street.name)
+      createStreetElement(street.key, street.name);
     })
   })
   .catch(err => console.log('Request failed', err));
@@ -29,7 +30,7 @@ function ShowStreetNames(streetName) {
 function createStreetElement(streetKey, streetName) {
   getMatchingStreetName.insertAdjacentHTML(
     "beforeend", 
-    `<a href="#" data-street-key="${streetKey}">${streetName}</a>`
+    `<a href="${getBusStopsURL(streetKey)}" data-street-key="${streetKey}">${streetName}</a>`
   )
 }
 function createStreetNotFoundElement() {
@@ -50,4 +51,3 @@ searchBar.addEventListener('submit', (event) => {
   
   
 })
-
